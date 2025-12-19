@@ -30,17 +30,70 @@ class WaterIntakeDaoTest {
     }
 
     @Test
-    fun insertAndGetAllWaterIntake() = runBlocking {
+    fun insertAndGetWaterIntakeForDay_returnsOnlyDataInRange() = runBlocking {
+        val now = System.currentTimeMillis()
+
         val entity = WaterIntakeEntity(
             amountMl = 250,
-            timestamp = 123456L
+            timestamp = now
         )
 
         dao.insertWaterIntake(entity)
 
-        val list = dao.getAllWaterIntake()
+        val start = now - 1_000
+        val end = now + 1_000
+
+        val list = dao.getWaterIntakeForDay(start, end)
+
         assertEquals(1, list.size)
-        assertEquals(250, list[0].amountMl)
+        assertEquals(250, list.first().amountMl)
+    }
+
+    @Test
+    fun getWaterIntakeSince_returnsRecentDataOnly() = runBlocking {
+        val oldTime = System.currentTimeMillis() - 10_000
+        val recentTime = System.currentTimeMillis()
+
+        dao.insertWaterIntake(
+            WaterIntakeEntity(
+                amountMl = 100,
+                timestamp = oldTime
+            )
+        )
+
+        dao.insertWaterIntake(
+            WaterIntakeEntity(
+                amountMl = 300,
+                timestamp = recentTime
+            )
+        )
+
+        val result = dao.getWaterIntakeSince(
+            startTime = System.currentTimeMillis() - 5_000
+        )
+
+        assertEquals(1, result.size)
+        assertEquals(300, result.first().amountMl)
+    }
+
+    @Test
+    fun getWaterIntakeInRange_returnsCorrectData() = runBlocking {
+        val baseTime = System.currentTimeMillis()
+
+        dao.insertWaterIntake(
+            WaterIntakeEntity(
+                amountMl = 150,
+                timestamp = baseTime
+            )
+        )
+
+        val result = dao.getWaterIntakeInRange(
+            from = baseTime - 1_000,
+            to = baseTime + 1_000
+        )
+
+        assertEquals(1, result.size)
+        assertEquals(150, result[0].amountMl)
     }
 
     @After
