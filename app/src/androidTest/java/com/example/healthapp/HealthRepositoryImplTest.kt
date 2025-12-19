@@ -23,6 +23,7 @@ class HealthRepositoryImplTest {
     @Before
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
+
         db = Room.inMemoryDatabaseBuilder(
             context,
             HealthDatabase::class.java
@@ -34,19 +35,41 @@ class HealthRepositoryImplTest {
     }
 
     @Test
-    fun addAndGetWaterIntake_domainModelReturned() = runBlocking {
+    fun addAndGetTodayWaterIntake_returnsOnlyTodayData() = runBlocking {
+        val now = System.currentTimeMillis()
+
+        // insert today's data
         repository.addWaterIntake(
             WaterIntake(
                 id = 0,
                 amountMl = 300,
-                timestamp = 999L
+                timestamp = now
             )
         )
 
-        val list = repository.getAllWaterIntake()
+        val todayList = repository.getTodayWaterIntake()
 
-        assertEquals(1, list.size)
-        assertEquals(300, list[0].amountMl)
+        assertEquals(1, todayList.size)
+        assertEquals(300, todayList.first().amountMl)
+    }
+
+    @Test
+    fun getWaterIntakeInRange_returnsCorrectData() = runBlocking {
+        val start = System.currentTimeMillis() - 60_000
+        val end = System.currentTimeMillis() + 60_000
+
+        repository.addWaterIntake(
+            WaterIntake(
+                id = 0,
+                amountMl = 200,
+                timestamp = System.currentTimeMillis()
+            )
+        )
+
+        val result = repository.getWaterIntakeInRange(start, end)
+
+        assertEquals(1, result.size)
+        assertEquals(200, result[0].amountMl)
     }
 
     @After
