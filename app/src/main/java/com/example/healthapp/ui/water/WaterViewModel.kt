@@ -25,7 +25,7 @@ class WaterViewModel(
             try {
                 _uiState.value = WaterUiState.Loading
 
-                val list = repository.getAllWaterIntake()
+                val list = repository.getTodayWaterIntake()
 
                 _uiState.value =
                     if (list.isEmpty()) {
