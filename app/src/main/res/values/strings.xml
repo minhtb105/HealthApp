@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">HealthApp</string>
     <string name="water_empty">There is currently no water data available.</string>
-    <string name="water_total">0 ml</string>
+    <string name="water_total">Total: %1$d ml</string>
     <string name="water_add">+200 ml</string>
+    <string name="water_error">%1$s</string>
 </resources>
