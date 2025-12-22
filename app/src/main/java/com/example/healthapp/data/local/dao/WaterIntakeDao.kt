@@ -27,7 +27,7 @@ interface WaterIntakeDao {
     @Query("""
         SELECT * FROM water_intake
         WHERE timestamp >= :startTime
-        ORDER BY timestamp ASC
+        ORDER BY timestamp DESC
     """)
     suspend fun getWaterIntakeSince(
         startTime: Long
@@ -36,7 +36,7 @@ interface WaterIntakeDao {
     @Query("""
         SELECT * FROM water_intake
         WHERE timestamp BETWEEN :from AND :to
-        ORDER BY timestamp ASC
+        ORDER BY timestamp DESC
     """)
     suspend fun getWaterIntakeInRange(
         from: Long,
