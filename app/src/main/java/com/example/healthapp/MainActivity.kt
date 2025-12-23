@@ -9,10 +9,8 @@ import android.widget.TextView
 import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import androidx.activity.viewModels
-import androidx.room.Room
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import com.example.healthapp.data.local.HealthDatabase
 import com.example.healthapp.ui.water.WaterUiState
 import com.example.healthapp.ui.water.WaterViewModel
 
