@@ -5,9 +5,10 @@ import com.example.healthapp.data.mapper.toDomain
 import com.example.healthapp.data.mapper.toEntity
 import com.example.healthapp.domain.model.WaterIntake
 import com.example.healthapp.utils.TimeUtils
+import javax.inject.Inject
 
 
-class HealthRepositoryImpl(
+class HealthRepositoryImpl @Inject constructor(
     private val dao: WaterIntakeDao,
     private val timeUtils: TimeUtils
 ) : HealthRepository {

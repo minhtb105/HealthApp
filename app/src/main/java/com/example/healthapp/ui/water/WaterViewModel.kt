@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import com.example.healthapp.domain.model.WaterIntake
 import com.example.healthapp.utils.TimeProvider
 import com.example.healthapp.data.repository.HealthRepository
@@ -20,10 +22,12 @@ import com.example.healthapp.data.repository.HealthRepository
  *
  * This ViewModel does NOT hold any UI reference (View, Context).
  */
-class WaterViewModel(
+@HiltViewModel
+class WaterViewModel @Inject constructor(
     private val repository: HealthRepository,
     private val timeProvider: TimeProvider
 ) : ViewModel() {
+
     /**
      * Internal mutable UI state.
      * Only the ViewModel is allowed to update this state.

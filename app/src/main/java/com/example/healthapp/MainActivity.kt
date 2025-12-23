@@ -7,19 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Button
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.healthapp.ui.water.WaterViewModel
+import androidx.activity.viewModels
 import androidx.room.Room
-import com.example.healthapp.data.local.HealthDatabase
-import com.example.healthapp.data.repository.HealthRepositoryImpl
-import com.example.healthapp.ui.water.WaterViewModelFactory
-import com.example.healthapp.ui.water.WaterUiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.example.healthapp.data.local.HealthDatabase
+import com.example.healthapp.ui.water.WaterUiState
+import com.example.healthapp.ui.water.WaterViewModel
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel: WaterViewModel
+    private val viewModel: WaterViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,19 +32,6 @@ class MainActivity : AppCompatActivity() {
         val emptyText = findViewById<TextView>(R.id.emptyText)
         val totalText = findViewById<TextView>(R.id.totalText)
         val addButton = findViewById<Button>(R.id.addButton)
-
-        val db = Room.databaseBuilder(
-            applicationContext,
-            HealthDatabase::class.java,
-            "health_database"
-        ).build()
-
-        val repository = HealthRepositoryImpl(db.waterIntakeDao())
-
-        viewModel = ViewModelProvider(
-            this,
-            WaterViewModelFactory(repository)
-        )[WaterViewModel::class.java]
 
         lifecycleScope.launch {
             viewModel.uiState.collect { state ->
