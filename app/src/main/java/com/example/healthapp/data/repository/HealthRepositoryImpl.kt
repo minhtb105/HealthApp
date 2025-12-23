@@ -8,7 +8,8 @@ import com.example.healthapp.utils.TimeUtils
 
 
 class HealthRepositoryImpl(
-    private val dao: WaterIntakeDao
+    private val dao: WaterIntakeDao,
+    private val timeUtils: TimeUtils
 ) : HealthRepository {
 
     override suspend fun addWaterIntake(waterIntake: WaterIntake) {
@@ -16,14 +17,14 @@ class HealthRepositoryImpl(
     }
 
     override suspend fun getTodayWaterIntake(): List<WaterIntake> {
-        val (start, end) = TimeUtils.todayRange()
+        val (start, end) = timeUtils.todayRange()
         return dao
             .getWaterIntakeForDay(start, end)
             .map { it.toDomain() }
     }
 
     override suspend fun getWaterIntakeLast7Days(): List<WaterIntake> {
-        val startTime = TimeUtils.last7DaysStart()
+        val startTime = timeUtils.last7DaysStart()
         return dao
             .getWaterIntakeSince(startTime)
             .map { it.toDomain() }
