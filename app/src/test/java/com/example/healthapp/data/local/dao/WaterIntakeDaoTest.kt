@@ -1,10 +1,9 @@
-package com.example.healthapp
+package com.example.healthapp.data.local.dao
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.healthapp.data.local.HealthDatabase
-import com.example.healthapp.data.local.dao.WaterIntakeDao
 import com.example.healthapp.data.local.entity.WaterIntakeEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.*
