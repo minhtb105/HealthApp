@@ -3,6 +3,7 @@ package com.example.healthapp.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.healthapp.data.local.dao.WaterIntakeDao
+import com.example.healthapp.data.local.dao.SleepSessionDao
 import com.example.healthapp.data.local.entity.WaterIntakeEntity
 import com.example.healthapp.data.local.entity.SleepSessionEntity
 
@@ -17,4 +18,5 @@ import com.example.healthapp.data.local.entity.SleepSessionEntity
 )
 abstract class HealthDatabase : RoomDatabase() {
     abstract fun waterIntakeDao(): WaterIntakeDao
+    abstract fun sleepSessionDao(): SleepSessionDao
 }
