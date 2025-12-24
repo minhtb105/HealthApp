@@ -9,12 +9,18 @@ import com.example.healthapp.data.local.HealthDatabase
 import com.example.healthapp.data.repository.HealthRepositoryImpl
 import com.example.healthapp.ui.water.WaterUiState
 import com.example.healthapp.ui.water.WaterViewModel
+import com.example.healthapp.utils.TimeUtils
+import com.example.healthapp.utils.TimeProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
 
+
+class FakeTimeProvider(private val fixedTime: Long) : TimeProvider {
+    override fun now(): Long = fixedTime
+}
 
 @RunWith(AndroidJUnit4::class)
 class WaterViewModelTest {
@@ -37,11 +43,18 @@ class WaterViewModelTest {
             .allowMainThreadQueries()
             .build()
 
+        val fakeTimeProvider = FakeTimeProvider(1_720_000_000_000L)
+
         repository = HealthRepositoryImpl(
-            dao = db.waterIntakeDao()
+            dao = db.waterIntakeDao(),
+            timeUtils = TimeUtils(fakeTimeProvider)
         )
 
-        viewModel = WaterViewModel(repository)
+        viewModel = WaterViewModel(
+            repository = repository,
+            timeProvider = fakeTimeProvider
+        )
+
     }
 
     @After
