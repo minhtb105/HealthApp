@@ -7,6 +7,6 @@ data class SleepRecord(
     val id: Long,
     val sleepTime: Long,
     val wakeTime: Long,
-    val durationHours: Float,
+    val durationHours: Long,
     val date: LocalDate
 )

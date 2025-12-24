@@ -10,6 +10,6 @@ data class SleepRecordEntity (
     val id: Long = 0,
     val sleepTime: Long,
     val wakeTime: Long,
-    val duration: Long,
+    val durationHours: Long,
     val date: String
 )
