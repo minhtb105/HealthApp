@@ -1,24 +1,36 @@
 package com.example.healthapp.data.mapper
 
 import com.example.healthapp.data.local.entity.SleepRecordEntity
-import com.example.healthapp.domain.model.SleepRecord
-import java.time.LocalDate
+import com.example.healthapp.domain.model.SleepSession
+import com.example.healthapp.domain.model.SleepType
+import java.time.Instant
+import java.time.ZoneId
 
 
-fun SleepRecordEntity.toDomain(): SleepRecord =
-    SleepRecord(
+fun SleepRecordEntity.toDomain(): SleepSession =
+    SleepSession(
         id = id,
-        sleepTime = sleepTime,
-        wakeTime = wakeTime,
-        durationHours = durationHours,
-        date = LocalDate.parse(date)
+        startTime = startTime,
+        endTime = endTime,
+        durationMinutes = durationMinutes,
+        type = SleepType.valueOf(type)
     )
 
-fun SleepRecord.toEntity(): SleepRecordEntity =
+/**
+ * Domain -> Entity
+ *
+ * startDate derived from startTime
+ */
+fun SleepSession.toEntity(): SleepRecordEntity =
     SleepRecordEntity(
         id = id,
-        sleepTime = sleepTime,
-        wakeTime = wakeTime,
-        durationHours = durationHours,
-        date = date.toString()
+        startTime = startTime,
+        endTime = endTime,
+        durationMinutes = durationMinutes,
+        type = type.name,
+        startDate = Instant
+            .ofEpochMilli(startTime)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+            .toString()
     )
