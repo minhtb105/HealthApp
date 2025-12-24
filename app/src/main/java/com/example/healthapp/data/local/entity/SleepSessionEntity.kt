@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
         Index("startTime")
     ]
 )
-data class SleepRecordEntity (
+data class SleepSessionEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val startTime: Long,
