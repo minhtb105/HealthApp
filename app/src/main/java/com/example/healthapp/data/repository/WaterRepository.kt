@@ -2,7 +2,7 @@ package com.example.healthapp.data.repository
 
 import com.example.healthapp.domain.model.WaterIntake
 
-interface HealthRepository {
+interface WaterRepository {
 
     suspend fun addWaterIntake(waterIntake: WaterIntake)
 

@@ -1,4 +1,4 @@
-package com.example.healthapp.data.mapper
+package com.example.healthapp.data.mapper.water
 
 import com.example.healthapp.data.local.entity.WaterIntakeEntity
 import com.example.healthapp.domain.model.WaterIntake

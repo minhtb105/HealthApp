@@ -1,13 +1,13 @@
-package com.example.healthapp.data.mapper
+package com.example.healthapp.data.mapper.sleep
 
-import com.example.healthapp.data.local.entity.SleepRecordEntity
+import com.example.healthapp.data.local.entity.SleepSessionEntity
 import com.example.healthapp.domain.model.SleepSession
 import com.example.healthapp.domain.model.SleepType
 import java.time.Instant
 import java.time.ZoneId
 
 
-fun SleepRecordEntity.toDomain(): SleepSession =
+fun SleepSessionEntity.toDomain(): SleepSession =
     SleepSession(
         id = id,
         startTime = startTime,
@@ -21,8 +21,8 @@ fun SleepRecordEntity.toDomain(): SleepSession =
  *
  * startDate derived from startTime
  */
-fun SleepSession.toEntity(): SleepRecordEntity =
-    SleepRecordEntity(
+fun SleepSession.toEntity(): SleepSessionEntity =
+    SleepSessionEntity(
         id = id,
         startTime = startTime,
         endTime = endTime,
