@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.healthapp.data.local.HealthDatabase
+import com.example.healthapp.data.repository.WaterRepository
 import com.example.healthapp.domain.model.WaterIntake
 import kotlinx.coroutines.runBlocking
 import org.junit.*
@@ -27,7 +28,7 @@ class FakeTimeProvider(private val fixedTime: Long) : TimeProvider {
 class HealthRepositoryImplTest {
 
     private lateinit var db: HealthDatabase
-    private lateinit var repository: HealthRepository
+    private lateinit var repository: WaterRepository
 
     companion object {
         private const val FIXED_TIME = 1_720_000_000_000L
@@ -44,7 +45,7 @@ class HealthRepositoryImplTest {
 
         val timeUtils = TimeUtils(FakeTimeProvider(FIXED_TIME))
 
-        repository = HealthRepositoryImpl(
+        repository = WaterRepositoryImpl(
             dao = db.waterIntakeDao(),
             timeUtils = timeUtils
         )
