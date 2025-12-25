@@ -3,7 +3,7 @@ package com.example.healthapp.data.local.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import com.example.healthapp.data.local.entity.SleepRecordEntity
+import com.example.healthapp.data.local.entity.SleepSessionEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -17,7 +17,7 @@ interface SleepSessionDao {
         SELECT * FROM sleep_sessions
         ORDER BY startTime DESC
     """)
-    fun observeAll(): Flow<List<SleepRecordEntity>>
+    fun observeAll(): Flow<List<SleepSessionEntity>>
 
     /**
      * Observe sleep sessions of a specific day
@@ -28,7 +28,7 @@ interface SleepSessionDao {
         WHERE startDate = :date
         ORDER BY startTime ASC
     """)
-    fun observeByDate(date: String): Flow<List<SleepRecordEntity>>
+    fun observeByDate(date: String): Flow<List<SleepSessionEntity>>
 
     /**
      * Get sleep sessions in a time range
@@ -42,13 +42,13 @@ interface SleepSessionDao {
     suspend fun getInRange(
         from: Long,
         to: Long
-    ): List<SleepRecordEntity>
+    ): List<SleepSessionEntity>
 
     /**
      * Insert or update a sleep session
      */
     @Upsert
-    suspend fun upsert(session: SleepRecordEntity)
+    suspend fun upsert(session: SleepSessionEntity)
 
     /**
      * Delete a session
