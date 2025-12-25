@@ -20,6 +20,6 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindSleepRepository(
-        impl: SleepRepository
-    ): SleepRepositoryImpl
+        impl: SleepRepositoryImpl
+    ): SleepRepository
 }
