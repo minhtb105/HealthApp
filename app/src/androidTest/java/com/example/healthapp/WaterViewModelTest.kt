@@ -6,11 +6,12 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.healthapp.data.local.HealthDatabase
-import com.example.healthapp.data.repository.HealthRepositoryImpl
+import com.example.healthapp.data.repository.WaterRepositoryImpl
 import com.example.healthapp.ui.water.WaterUiState
 import com.example.healthapp.ui.water.WaterViewModel
 import com.example.healthapp.utils.TimeUtils
 import com.example.healthapp.utils.TimeProvider
+import com.example.healthapp.fake.FakeSessionManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -29,7 +30,7 @@ class WaterViewModelTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var db: HealthDatabase
-    private lateinit var repository: HealthRepositoryImpl
+    private lateinit var repository: WaterRepositoryImpl
     private lateinit var viewModel: WaterViewModel
 
     @Before
@@ -45,9 +46,10 @@ class WaterViewModelTest {
 
         val fakeTimeProvider = FakeTimeProvider(1_720_000_000_000L)
 
-        repository = HealthRepositoryImpl(
+        repository = WaterRepositoryImpl(
             dao = db.waterIntakeDao(),
-            timeUtils = TimeUtils(fakeTimeProvider)
+            timeUtils = TimeUtils(fakeTimeProvider),
+            sessionManager = FakeSessionManager()
         )
 
         viewModel = WaterViewModel(

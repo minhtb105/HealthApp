@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.healthapp.data.local.HealthDatabase
-import com.example.healthapp.data.repository.WaterRepository
 import com.example.healthapp.domain.model.WaterIntake
 import kotlinx.coroutines.runBlocking
 import org.junit.*
@@ -14,6 +13,8 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import com.example.healthapp.utils.TimeProvider
 import com.example.healthapp.utils.TimeUtils
+import com.example.healthapp.fake.FakeSessionManager
+
 
 
 class FakeTimeProvider(private val fixedTime: Long) : TimeProvider {
@@ -47,7 +48,8 @@ class HealthRepositoryImplTest {
 
         repository = WaterRepositoryImpl(
             dao = db.waterIntakeDao(),
-            timeUtils = timeUtils
+            timeUtils = timeUtils,
+            sessionManager = FakeSessionManager()
         )
     }
 
