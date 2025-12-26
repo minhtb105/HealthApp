@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity
+@Entity(tableName = "user_profile")
 data class UserProfileEntity (
     @PrimaryKey val userId: String,
     val heightCm: Int,
