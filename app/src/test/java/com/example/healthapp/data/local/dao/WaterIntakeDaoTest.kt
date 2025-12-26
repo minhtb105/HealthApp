@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.healthapp.data.local.HealthDatabase
 import com.example.healthapp.data.local.entity.WaterIntakeEntity
+import com.example.healthapp.fake.FakeSessionManager
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
@@ -22,6 +23,8 @@ class WaterIntakeDaoTest {
 
     private lateinit var db: HealthDatabase
     private lateinit var dao: WaterIntakeDao
+    private lateinit var sessionManager: FakeSessionManager
+
 
     companion object {
         // Fake fixed timestamp to avoid flaky tests
@@ -39,6 +42,7 @@ class WaterIntakeDaoTest {
             .build()
 
         dao = db.waterIntakeDao()
+        sessionManager = FakeSessionManager()
     }
 
     @After
@@ -54,10 +58,10 @@ class WaterIntakeDaoTest {
     fun getAllWaterIntake_ordersByTimestampDesc() = runBlocking {
         // Given
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 100, timestamp = BASE_TIME)
+            WaterIntakeEntity(amountMl = 100, timestamp = BASE_TIME, userId = sessionManager.currentUserId)
         )
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 200, timestamp = BASE_TIME + 1_000)
+            WaterIntakeEntity(amountMl = 200, timestamp = BASE_TIME + 1_000, userId = sessionManager.currentUserId)
         )
 
         // When
@@ -77,13 +81,13 @@ class WaterIntakeDaoTest {
     fun getWaterIntakeForDay_returnsOnlyDataInRange_orderedDesc() = runBlocking {
         // Given
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 100, timestamp = BASE_TIME - 10_000)
+            WaterIntakeEntity(amountMl = 100, timestamp = BASE_TIME - 10_000, userId = sessionManager.currentUserId)
         )
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 250, timestamp = BASE_TIME)
+            WaterIntakeEntity(amountMl = 250, timestamp = BASE_TIME, userId = sessionManager.currentUserId)
         )
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 300, timestamp = BASE_TIME + 10_000)
+            WaterIntakeEntity(amountMl = 300, timestamp = BASE_TIME + 10_000, userId = sessionManager.currentUserId)
         )
 
         // When
@@ -105,10 +109,10 @@ class WaterIntakeDaoTest {
     fun getWaterIntakeSince_returnsOnlyRecentData() = runBlocking {
         // Given
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 100, timestamp = BASE_TIME - 10_000)
+            WaterIntakeEntity(amountMl = 100, timestamp = BASE_TIME - 10_000, userId = sessionManager.currentUserId)
         )
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 300, timestamp = BASE_TIME)
+            WaterIntakeEntity(amountMl = 300, timestamp = BASE_TIME, userId = sessionManager.currentUserId)
         )
 
         // When
@@ -129,7 +133,7 @@ class WaterIntakeDaoTest {
     fun getWaterIntakeInRange_returnsCorrectData() = runBlocking {
         // Given
         dao.insertWaterIntake(
-            WaterIntakeEntity(amountMl = 150, timestamp = BASE_TIME)
+            WaterIntakeEntity(amountMl = 150, timestamp = BASE_TIME, userId = sessionManager.currentUserId)
         )
 
         // When

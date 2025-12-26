@@ -4,13 +4,15 @@ import com.example.healthapp.data.local.dao.SleepSessionDao
 import com.example.healthapp.data.mapper.sleep.toDomain
 import com.example.healthapp.data.mapper.sleep.toEntity
 import com.example.healthapp.domain.model.SleepSession
+import com.example.healthapp.domain.session.SessionManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 
 class SleepRepositoryImpl @Inject constructor(
-    private val dao: SleepSessionDao
+    private val dao: SleepSessionDao,
+    private val sessionManager: SessionManager
 ) : SleepRepository {
 
     override fun observeAll(): Flow<List<SleepSession>> =
@@ -33,7 +35,7 @@ class SleepRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
 
     override suspend fun upsertSleepSession(session: SleepSession) {
-        dao.upsert(session.toEntity())
+        dao.upsert(session.toEntity(sessionManager.currentUserId))
     }
 
     override suspend fun deleteSleepSession(id: Long) {
