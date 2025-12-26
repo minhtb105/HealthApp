@@ -21,9 +21,10 @@ fun SleepSessionEntity.toDomain(): SleepSession =
  *
  * startDate derived from startTime
  */
-fun SleepSession.toEntity(): SleepSessionEntity =
+fun SleepSession.toEntity(userId: String): SleepSessionEntity =
     SleepSessionEntity(
         id = id,
+        userId = userId,
         startTime = startTime,
         endTime = endTime,
         durationMinutes = durationMinutes,

@@ -10,8 +10,9 @@ fun WeightRecordEntity.toDomain(): WeightRecord = WeightRecord(
     measuredAt = measuredAt
 )
 
-fun WeightRecord.toEntity(): WeightRecordEntity = WeightRecordEntity(
+fun WeightRecord.toEntity(userId: String): WeightRecordEntity = WeightRecordEntity(
     id = id,
+    userId = userId,
     weightKg = weightKg,
     measuredAt = measuredAt
 )

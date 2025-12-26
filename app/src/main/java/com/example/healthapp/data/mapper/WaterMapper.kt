@@ -12,9 +12,10 @@ fun WaterIntakeEntity.toDomain(): WaterIntake {
     )
 }
 
-fun WaterIntake.toEntity(): WaterIntakeEntity {
+fun WaterIntake.toEntity(userId: String): WaterIntakeEntity {
     return WaterIntakeEntity(
         id = id,
+        userId = userId,
         amountMl = amountMl,
         timestamp = timestamp
     )
