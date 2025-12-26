@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.example.healthapp.domain.model.WaterIntake
 import com.example.healthapp.utils.TimeProvider
-import com.example.healthapp.data.repository.WaterRepository
+import com.example.healthapp.domain.repository.WaterRepository
 
 
 /**

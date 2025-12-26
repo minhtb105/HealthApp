@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.healthapp.data.local.HealthDatabase
 import com.example.healthapp.domain.model.WaterIntake
+import com.example.healthapp.domain.repository.WaterRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith

@@ -1,8 +1,8 @@
 package com.example.healthapp.di
 
-import com.example.healthapp.data.repository.WaterRepository
+import com.example.healthapp.domain.repository.WaterRepository
 import com.example.healthapp.data.repository.WaterRepositoryImpl
-import com.example.healthapp.data.repository.SleepRepository
+import com.example.healthapp.domain.repository.SleepRepository
 import com.example.healthapp.data.repository.SleepRepositoryImpl
 import dagger.Binds
 import dagger.Module

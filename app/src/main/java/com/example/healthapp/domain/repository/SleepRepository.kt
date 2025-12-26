@@ -1,4 +1,4 @@
-package com.example.healthapp.data.repository
+package com.example.healthapp.domain.repository
 
 import com.example.healthapp.domain.model.SleepSession
 import kotlinx.coroutines.flow.Flow

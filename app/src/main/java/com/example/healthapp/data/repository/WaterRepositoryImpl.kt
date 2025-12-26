@@ -5,6 +5,7 @@ import com.example.healthapp.data.mapper.water.toDomain
 import com.example.healthapp.data.mapper.water.toEntity
 import com.example.healthapp.domain.model.WaterIntake
 import com.example.healthapp.domain.session.SessionManager
+import com.example.healthapp.domain.repository.WaterRepository
 import com.example.healthapp.utils.TimeUtils
 import javax.inject.Inject
 
