@@ -4,6 +4,10 @@ import com.example.healthapp.domain.repository.WaterRepository
 import com.example.healthapp.data.repository.WaterRepositoryImpl
 import com.example.healthapp.domain.repository.SleepRepository
 import com.example.healthapp.data.repository.SleepRepositoryImpl
+import com.example.healthapp.data.repository.UserProfileRepositoryImpl
+import com.example.healthapp.data.repository.WeightRepositoryImpl
+import com.example.healthapp.domain.repository.UserProfileRepository
+import com.example.healthapp.domain.repository.WeightRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +26,12 @@ abstract class RepositoryModule {
     abstract fun bindSleepRepository(
         impl: SleepRepositoryImpl
     ): SleepRepository
+
+    abstract fun bindWeightRepository(
+        impl: WeightRepositoryImpl
+    ): WeightRepository
+
+    abstract fun bindUserProfileRepository(
+        impl: UserProfileRepositoryImpl
+    ): UserProfileRepository
 }
