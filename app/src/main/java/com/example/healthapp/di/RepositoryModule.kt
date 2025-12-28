@@ -27,10 +27,12 @@ abstract class RepositoryModule {
         impl: SleepRepositoryImpl
     ): SleepRepository
 
+    @Binds
     abstract fun bindWeightRepository(
         impl: WeightRepositoryImpl
     ): WeightRepository
 
+    @Binds
     abstract fun bindUserProfileRepository(
         impl: UserProfileRepositoryImpl
     ): UserProfileRepository

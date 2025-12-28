@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 
 @Module
@@ -13,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class SessionModule {
 
     @Binds
+    @Singleton
     abstract fun bindSessionManager(
         impl: SessionManagerImpl
     ): SessionManager

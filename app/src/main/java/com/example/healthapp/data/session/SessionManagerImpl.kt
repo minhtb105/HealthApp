@@ -1,15 +1,15 @@
 package com.example.healthapp.data.session
 
+import com.example.healthapp.data.remote.FirebaseAuthService
 import com.example.healthapp.domain.session.SessionManager
-import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
 
 class SessionManagerImpl  @Inject constructor(
-    private val auth: FirebaseAuth
+    private val authService: FirebaseAuthService
 ) : SessionManager {
 
     override val currentUserId: String
-        get() = auth.currentUser?.uid
+        get() = authService.currentUserId()
             ?: throw IllegalStateException("User not logged in")
 }
