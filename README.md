@@ -1,84 +1,75 @@
-🩺 Health Tracker App (Android – Kotlin)
 
-Health Tracker App is an Android application that helps users track daily water intake, sleep duration, and BMI.
-The app is designed with an offline-first approach, synchronizing data with Firebase when the network is available.
+# 🩺 Health Tracker App (Android – Kotlin)
 
-This project demonstrates clean architecture, MVVM, Dependency Injection, and real-world data handling, suitable for Android/Kotlin Intern or Junior positions.
+An **offline-first Android application** that helps users track **daily water intake**, **sleep duration**, and **BMI**.  
+The app syncs seamlessly with **Firebase** when the network is available and works fully offline otherwise.
 
-📱 Features
-💧 Water Intake Tracking
+This project is built with **Clean Architecture**, **MVVM**, and modern Android best practices — suitable for **Android Intern / Junior Developer** portfolios.
 
-Quick add water amounts (+200ml, +300ml, etc.)
+---
 
-Calculate total daily water intake
+## 📱 Features
 
-Fully functional offline
+### 💧 Water Intake Tracking
+- Quick add water amounts (+200ml, +300ml, etc.)
+- Calculate total daily water intake
+- Fully functional offline
+- Automatic cloud sync when online
 
-Automatic sync to cloud when online
+### 😴 Sleep Tracking
+- Record sleep & wake-up time
+- Calculate total sleep duration
+- View sleep history by date
+- Local cache with Firebase backup
 
-😴 Sleep Tracking
+### ⚖️ BMI Calculator
+- Input height & weight
+- Auto BMI calculation + WHO classification
+- Save BMI history
+- Works offline
 
-Record sleep time and wake-up time
+### 🔐 Authentication
+- Email / Password login (Firebase Auth)
+- User-specific data isolation
+- Logout clears local database & UI state
 
-Calculate total sleep duration
+---
 
-View sleep history by date
+## 🧠 Architecture & Design
 
-Local cache with Firebase backup
+### 📐 Architecture Overview
 
-⚖️ BMI Calculator
-
-Input height and weight
-
-Calculate BMI and classification
-
-Save BMI history
-
-Results available even when offline
-
-🔐 User Authentication
-
-Login / Logout with Email & Password (Firebase Auth)
-
-User-specific data isolation
-
-Logout clears local database and UI state
-
-🧠 Architecture & Design Thinking
-📐 Architecture Overview
-
-The app follows MVVM + Clean Architecture + Repository pattern:
-
+```
 UI (Activity / Fragment)
-↓
+        ↓
 ViewModel (State & Logic)
-↓
-UseCase (Business Logic)
-↓
+        ↓
+UseCase (Business Rules)
+        ↓
 Repository (Interface)
-↓
+        ↓
 Local (Room) | Remote (Firebase)
+```
 
-🎯 Key Principles
+### 🎯 Key Principles
+- UI only renders state
+- ViewModel does NOT depend on Room or Firebase
+- Local database is the **Single Source of Truth**
+- Offline-first by design
+- Easy to test, extend, and maintain
 
-UI only renders state
+---
 
-ViewModel does NOT depend on Room or Firebase
+## 🗂 Project Structure
 
-Local database is the Single Source of Truth
-
-Offline-first by design
-
-Easy to test, extend, and maintain
-
-🗂 Project Structure
+```
 com.example.healthapp
 │
 ├── di/                     # Hilt modules
 │   ├── AppModule.kt
 │   ├── DatabaseModule.kt
-│   └── FirebaseModule.kt
-│   └── RepositoryModule.kt
+│   ├── FirebaseModule.kt
+│   ├── RepositoryModule.kt
 │   └── TimeModule.kt
 │
 ├── data/
@@ -88,7 +79,7 @@ com.example.healthapp
 │   │   └── HealthDatabase.kt
 │   │
 │   ├── remote/             # Firebase
-│   │   └── FirebaseService.kt
+│   │   └── FirebaseAuthService.kt
 │   │
 │   ├── mapper/
 │   └── repository/
@@ -96,120 +87,155 @@ com.example.healthapp
 ├── domain/
 │   ├── model/
 │   └── usecase/
+│   └── repository/
 │
 ├── ui/
 │   ├── water/
 │   ├── sleep/
-│   └── bmi/
+│   └── weight/
 │
 ├── utils/
 │   ├── SystemTimeProvider.kt
 │   ├── TimeProvider.kt
 │   └── TimeUtils.kt
 │
-└── HealthApplication.kt
+├── HealthApplication.kt
 └── MainActivity.kt
+```
 
-Clear separation of layers makes the codebase easy to review and scale.
+---
 
-🧩 Tech Stack
-Component	Technology
-Language	Kotlin
-Architecture	MVVM + Clean Architecture
-Dependency Injection	Hilt
-Local Database	Room
-Async Handling	Coroutines + StateFlow
-Authentication	Firebase Authentication
-Cloud Database	Firebase Firestore
-Build System	Gradle
-🔄 Data Flow (Offline-First)
-Adding Data (Water / Sleep / BMI)
+## 🧩 Tech Stack
+
+| Component            | Technology |
+|---------------------|------------|
+| Language             | Kotlin |
+| Architecture         | MVVM + Clean Architecture |
+| Dependency Injection | Hilt |
+| Local Database       | Room |
+| Async Handling       | Coroutines + StateFlow |
+| Authentication       | Firebase Authentication |
+| Cloud Database       | Firebase Firestore |
+| Build System         | Gradle |
+
+---
+
+## 🔄 Offline-First Data Flow
+
+### Adding Data (Water / Sleep / BMI)
+
+```
 User Action
-↓
+   ↓
 ViewModel
-↓
+   ↓
 UseCase
-↓
+   ↓
 Repository
-↓
-Room (save locally)
-↓
+   ↓
+Room (local save)
+   ↓
 Firestore (sync when online)
+```
 
-Offline Mode
+### Offline Mode
+- App reads data from Room
+- User can fully interact with the app
+- No UI blocking or crashes
 
-App reads data from Room
+### Back Online
+- Repository automatically syncs local data to Firestore
 
-User can fully interact with the app
+---
 
-No UI blocking or crashes
+## 🔐 Authentication Flow
+- User logs in via Firebase Authentication
+- Firebase UID is used as Firestore document key
+- On logout:
+    - Clear Room database
+    - Reset UI state
 
-Back Online
+---
 
-Repository automatically syncs local data to Firestore
+## 🧪 State Management
+UI state is modeled using immutable data classes and sealed classes:
 
-🔐 Authentication Flow
+- Loading
+- Empty
+- Success
+- Error
 
-User logs in via Firebase Authentication
+State is exposed via StateFlow and updated using copy() to ensure immutability and predictable UI rendering.
+---
 
-Firebase UID is used as the Firestore document key
+## 🧠 Key Architectural Decisions
 
-On logout:
+- **Derived data is not persisted**  
+  BMI is calculated dynamically from height & weight records to avoid data inconsistency.
 
-Clear Room database
+- **Room as Single Source of Truth**  
+  UI always reads from local database. Firebase is used only for backup & synchronization.
 
-Reset UI state
+- **User-scoped data isolation**  
+  All local and remote data is scoped by Firebase UID via a SessionManager abstraction.
 
-🧪 State Management & Error Handling
+- **Strict layer separation**  
+  Room entities, domain models, and UI models are separated using mapper classes.
 
-UI state is managed using StateFlow:
+## 📸 Screenshots
 
-Loading
-
-Empty
-
-Success
-
-Error
-
-UI does not handle business logic — it only reacts to state changes.
-
-📸 Screenshots
+```
 /screenshots
 ├── login.png
 ├── water.png
 ├── sleep.png
 └── bmi.png
+```
 
+_(Add 4–6 screenshots for better presentation)_
 
-(Add 4–6 screenshots for better presentation)
+---
 
-🚀 How to Run the Project
+## 🚀 How to Run
 
-Clone the repository
+1. Clone the repository
+2. Add `google-services.json`
+3. Enable **Firebase Authentication (Email/Password)**
+4. Enable **Cloud Firestore**
+5. Run the app in Android Studio
 
-Add google-services.json
+---
 
-Enable Firebase Authentication (Email/Password)
+## 🎯 What This Project Demonstrates
 
-Enable Cloud Firestore
+- Applying Clean Architecture in a real Android project
+- Designing offline-first data flow
+- Managing immutable UI state with StateFlow
+- Reducing coupling using dependency injection (Hilt)
+- Writing production-oriented code suitable for scaling
 
-Run the app on Android Studio
+---
 
-🎯 Learning Goals
+### 🚶 Step Tracking (Planned)
 
-Apply MVVM correctly in a real project
+- Integrate with Google Fit / Health Connect API
+- Read daily step count from system health data
+- Merge step data into existing offline-first architecture
+- Cache step data locally for fast UI rendering
 
-Use Hilt for dependency management
+### 🤖 Health Knowledge Assistant (RAG – Planned)
 
-Design an offline-first Android app
+- Retrieval-Augmented Generation (RAG) chatbot
+- Knowledge base built from trusted medical sources:
+    - WHO
+    - HealthCareMagic
+- Provides **informational health guidance**, not medical diagnosis
+- Clearly states that content is for reference only
+- Designed with prompt & response safety constraints
 
-Work with Firebase Authentication & Firestore
+## 🙋‍♂️ Author
 
-Write clean, readable, and maintainable code
-
-🙋‍♂️ Author
-Name: minhtb105
-Role: Android Intern Candidate
-Email: kisuit4.0@gmail.com
-GitHub: https://github.com/minhtb105
+- **Name:** minhtb105
+- **Role:** Android Intern Candidate
+- **Email:** kisuit4.0@gmail.com
+- **GitHub:** https://github.com/minhtb105
