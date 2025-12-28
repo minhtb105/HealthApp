@@ -17,7 +17,10 @@ class WaterRepositoryImpl @Inject constructor(
 ) : WaterRepository {
 
     override suspend fun addWaterIntake(waterIntake: WaterIntake) {
-        dao.insertWaterIntake(waterIntake.toEntity(sessionManager.currentUserId))
+        val userId = sessionManager.currentUserId
+            ?: throw IllegalStateException("User not logged in")
+
+        dao.insertWaterIntake(waterIntake.toEntity(userId = userId))
     }
 
     override suspend fun getTodayWaterIntake(): List<WaterIntake> {

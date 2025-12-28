@@ -9,7 +9,7 @@ class SessionManagerImpl  @Inject constructor(
     private val authService: FirebaseAuthService
 ) : SessionManager {
 
-    override val currentUserId: String
+    override val currentUserId: String?
         get() = authService.currentUserId()
             ?: throw IllegalStateException("User not logged in")
 }
