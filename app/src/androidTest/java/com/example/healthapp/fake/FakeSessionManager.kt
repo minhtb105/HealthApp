@@ -7,7 +7,7 @@ class FakeSessionManager(
     private var userId: String = "test_user"
 ) : SessionManager {
 
-    override val currentUserId: String
+    override val currentUserId: String?
         get() = userId
 
     fun setUser(userId: String) {
