@@ -71,7 +71,7 @@ dependencies {
     implementation(libs.firebase.auth)
 
     // Google Sign-In
-    implementation("com.google.android.gms:play-services-auth")
+    implementation(libs.google.play.services.auth)
 
     // Firebase features
     implementation(libs.firebase.analytics)
@@ -91,4 +91,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.room.testing)
     androidTestImplementation(libs.androidx.arch.core.testing)
+    androidTestImplementation(libs.google.play.services.auth)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }

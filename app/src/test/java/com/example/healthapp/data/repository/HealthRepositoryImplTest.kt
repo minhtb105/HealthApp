@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.healthapp.data.local.HealthDatabase
+import com.example.healthapp.data.local.entity.UserProfileEntity
 import com.example.healthapp.domain.model.WaterIntake
 import com.example.healthapp.domain.repository.WaterRepository
+import com.example.healthapp.domain.session.SessionManager
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
@@ -31,13 +33,14 @@ class HealthRepositoryImplTest {
 
     private lateinit var db: HealthDatabase
     private lateinit var repository: WaterRepository
+    private lateinit var sessionManager: SessionManager
 
     companion object {
         private const val FIXED_TIME = 1_720_000_000_000L
     }
 
     @Before
-    fun setup() {
+    fun setup() = runBlocking {
         val context = ApplicationProvider.getApplicationContext<Context>()
 
         db = Room.inMemoryDatabaseBuilder(
@@ -46,11 +49,25 @@ class HealthRepositoryImplTest {
         ).build()
 
         val timeUtils = TimeUtils(FakeTimeProvider(FIXED_TIME))
+        val dao = db.waterIntakeDao()
+        sessionManager = FakeSessionManager()
 
         repository = WaterRepositoryImpl(
-            dao = db.waterIntakeDao(),
+            dao = dao,
             timeUtils = timeUtils,
-            sessionManager = FakeSessionManager()
+            sessionManager = sessionManager
+        )
+
+        val userId = sessionManager.currentUserId
+            ?: throw IllegalStateException("User not logged in")
+
+        db.userProfileDao().upsert(
+            UserProfileEntity(
+                userId = userId,
+                gender = "unknown",
+                birthDate = "1990-01-01",
+                heightCm = 0,
+            )
         )
     }
 
