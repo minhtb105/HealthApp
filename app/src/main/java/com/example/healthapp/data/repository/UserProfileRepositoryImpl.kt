@@ -2,6 +2,7 @@ package com.example.healthapp.data.repository
 
 import com.example.healthapp.data.local.dao.UserProfileDao
 import com.example.healthapp.data.mapper.user.toDomain
+import com.example.healthapp.data.mapper.user.toEntity
 import com.example.healthapp.domain.model.UserProfile
 import com.example.healthapp.domain.repository.UserProfileRepository
 import javax.inject.Inject
@@ -14,6 +15,6 @@ class UserProfileRepositoryImpl @Inject constructor(
         userProfileDao.getUserProfile(userId)?.toDomain()
 
     override suspend fun upsertUserProfile(profile: UserProfile) {
-        TODO("Not yet implemented")
+        userProfileDao.upsert(profile.toEntity())
     }
 }
