@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.google.services)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
@@ -46,6 +46,7 @@ ksp {
 }
 
 dependencies {
+    implementation(libs.firebase.inappmessaging)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Room
@@ -66,11 +67,15 @@ dependencies {
     // Firebase BOM
     implementation(platform(libs.firebase.bom))
 
+    // Firebase Auth
+    implementation(libs.firebase.auth)
+
+    // Google Sign-In
+    implementation("com.google.android.gms:play-services-auth")
+
     // Firebase features
     implementation(libs.firebase.analytics)
-    implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-
 
     // ---------- Unit test (JVM, no emulator) ----------
     testImplementation(libs.junit)
@@ -86,8 +91,4 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.room.testing)
     androidTestImplementation(libs.androidx.arch.core.testing)
-}
-
-if (file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
 }

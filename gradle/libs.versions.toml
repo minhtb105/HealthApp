@@ -20,6 +20,7 @@ coroutinesTest = "1.7.3"
 googleServices = "4.4.2"
 firebaseBom = "33.6.0"
 desugarJdk = "2.0.4"
+firebaseInappmessaging = "22.0.2"
 
 
 [libraries]
@@ -48,6 +49,7 @@ firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdk" }
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
+firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
 
 
 [plugins]
