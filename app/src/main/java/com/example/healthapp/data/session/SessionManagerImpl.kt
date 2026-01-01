@@ -11,5 +11,4 @@ class SessionManagerImpl  @Inject constructor(
 
     override val currentUserId: String?
         get() = authService.currentUserId()
-            ?: throw IllegalStateException("User not logged in")
 }

@@ -4,5 +4,6 @@ import com.example.healthapp.domain.model.UserProfile
 
 
 interface UserProfileRepository {
-    suspend fun getUserProfile(userId: String): UserProfile
+    suspend fun getUserProfile(userId: String): UserProfile?
+    suspend fun upsertUserProfile(profile: UserProfile)
 }

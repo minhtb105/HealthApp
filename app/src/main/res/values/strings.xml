@@ -5,4 +5,5 @@
     <string name="water_add">+200 ml</string>
     <string name="water_error">%1$s</string>
     <string name="default_web_client_id">1:605459733678:android:cc891d4d7f6d3dfa5ca13f</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
 </resources>

@@ -10,6 +10,10 @@ import javax.inject.Inject
 class UserProfileRepositoryImpl @Inject constructor(
     private val userProfileDao: UserProfileDao,
 ) : UserProfileRepository {
-    override suspend fun getUserProfile(userId: String): UserProfile =
-        userProfileDao.getUserProfile(userId).toDomain()
+    override suspend fun getUserProfile(userId: String): UserProfile? =
+        userProfileDao.getUserProfile(userId)?.toDomain()
+
+    override suspend fun upsertUserProfile(profile: UserProfile) {
+        TODO("Not yet implemented")
+    }
 }

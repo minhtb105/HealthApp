@@ -1,0 +1,36 @@
+version: 2
+
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "09:00"
+      timezone: "Asia/Ho_Chi_Minh"
+
+    open-pull-requests-limit: 5
+
+    labels:
+      - dependencies
+      - android
+
+    commit-message:
+      prefix: "deps"
+
+    groups:
+      androidx:
+        patterns:
+          - "androidx.*"
+
+      firebase:
+        patterns:
+          - "com.google.firebase:*"
+
+      hilt:
+        patterns:
+          - "com.google.dagger:*"
+
+    ignore:
+      - dependency-name: "org.jetbrains.kotlin:*"
+        update-types: ["version-update:semver-major"]
