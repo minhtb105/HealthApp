@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.healthapp.data.local.HealthDatabase
+import com.example.healthapp.data.local.entity.UserProfileEntity
 import com.example.healthapp.data.local.entity.WaterIntakeEntity
 import com.example.healthapp.fake.FakeSessionManager
 import kotlinx.coroutines.runBlocking
@@ -32,17 +33,29 @@ class WaterIntakeDaoTest {
     }
 
     @Before
-    fun setup() {
+    fun setup() = runBlocking {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
             context,
             HealthDatabase::class.java
         )
-            .allowMainThreadQueries() // OK for tests only
+            .allowMainThreadQueries()
             .build()
 
         dao = db.waterIntakeDao()
         sessionManager = FakeSessionManager()
+
+        val userId = sessionManager.currentUserId
+            ?: throw IllegalStateException("User not logged in")
+
+        db.userProfileDao().upsert(
+            UserProfileEntity(
+                userId = userId,
+                gender = "unknown",
+                birthDate = "1990-01-01",
+                heightCm = 0,
+            )
+        )
     }
 
     @After
