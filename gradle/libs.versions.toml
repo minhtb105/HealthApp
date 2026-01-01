@@ -19,7 +19,7 @@ robolectric = "4.11.1"
 coroutinesTest = "1.7.3"
 googleServices = "4.4.2"
 firebaseBom = "33.6.0"
-desugarJdk = "2.0.4"
+desugarJdk = "2.1.5"
 
 
 [libraries]
