@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.navigation.safeargs)
 }
 
 android {
@@ -55,6 +56,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
@@ -76,6 +78,10 @@ dependencies {
     // Firebase features
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
+
+    // Navigation Component
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // ---------- Unit test (JVM, no emulator) ----------
     testImplementation(libs.junit)
