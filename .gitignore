@@ -17,3 +17,6 @@ local.properties
 app/build/*
 app/schemas/*
 app/google-services.json
+.idea/*
+!.idea/codeStyles/
+!.idea/inspectionProfiles/

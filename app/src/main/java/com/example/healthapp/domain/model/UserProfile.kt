@@ -9,7 +9,7 @@ enum class Gender {
 
 data class UserProfile (
     val userId: String,
-    val heightCm: Int,
-    val birthDate: String,
-    val gender: Gender
+    val heightCm: Int?,
+    val birthDate: String?,
+    val gender: Gender?
 )

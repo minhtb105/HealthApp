@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.2"
+agp = "8.5.0"
 kotlin = "2.1.20"
 ksp = "2.1.20-1.0.32"
 coreKtx = "1.13.1"
@@ -50,6 +50,7 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdk" }
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
+google-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth" }
 
 
 [plugins]

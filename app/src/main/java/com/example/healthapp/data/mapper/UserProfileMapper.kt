@@ -10,7 +10,7 @@ fun UserProfileEntity.toDomain(): UserProfile =
         userId = userId,
         heightCm = heightCm,
         birthDate = birthDate,
-        gender = Gender.valueOf(gender)
+        gender = gender?.let { Gender.valueOf(it) }
     )
 
 fun UserProfile.toEntity(): UserProfileEntity =
@@ -18,5 +18,5 @@ fun UserProfile.toEntity(): UserProfileEntity =
         userId = userId,
         heightCm = heightCm,
         birthDate = birthDate,
-        gender = gender.name
+        gender = gender?.name
     )
