@@ -1,10 +1,9 @@
 
 # 🩺 Health Tracker App (Android – Kotlin)
 
-An **offline-first Android application** that helps users track **daily water intake**, **sleep duration**, and **BMI**.  
+A production-oriented Android application demonstrating **offline-first** architecture, clean separation of layers, 
+and modern Android development practices that helps users track **daily water intake**, **sleep duration**, and **BMI**.  
 The app syncs seamlessly with **Firebase** when the network is available and works fully offline otherwise.
-
-This project is built with **Clean Architecture**, **MVVM**, and modern Android best practices — suitable for **Android Intern / Junior Developer** portfolios.
 
 ---
 
@@ -28,10 +27,14 @@ This project is built with **Clean Architecture**, **MVVM**, and modern Android 
 - Save BMI history
 - Works offline
 
-### 🔐 Authentication
-- Email / Password login (Firebase Auth)
-- User-specific data isolation
-- Logout clears local database & UI state
+### 🔐 Authentication (Guest-first)
+- Guest-first experience (no forced login on app start)
+- Firebase Authentication (Google Sign-In)
+- Login required only for user-specific features
+- Logout clears:
+    - Firebase auth session
+    - Local Room database
+    - In-memory session state
 
 ---
 
@@ -59,6 +62,14 @@ Local (Room) | Remote (Firebase)
 - Easy to test, extend, and maintain
 
 ---
+
+### 🧭 Navigation Architecture
+
+- Single-Activity architecture
+- Navigation Component + Fragment
+- Bottom Navigation with preserved fragment state
+- Session-aware UI rendering (guest vs logged-in)
+
 
 ## 🗂 Project Structure
 
@@ -90,9 +101,11 @@ com.example.healthapp
 │   └── repository/
 │
 ├── ui/
-│   ├── water/
-│   ├── sleep/
-│   └── weight/
+│   ├── main/        # MainActivity, BottomNavigation
+│   ├── home/        # HomeFragment
+│   ├── profile/     # ProfileFragment
+│   ├── auth/        # AuthActivity
+│   └── water/       # Water tracking feature
 │
 ├── utils/
 │   ├── SystemTimeProvider.kt
