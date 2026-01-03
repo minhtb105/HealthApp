@@ -26,34 +26,20 @@ class AuthViewModel @Inject constructor(
             _uiState.value = AuthUiState.Loading
             try {
                 authService.signInWithGoogle(idToken)
-                val userId = sessionManager.currentUserId
-                if (userId == null) {
-                    // unexpected, show error
-                    _uiState.value = AuthUiState.Error("User id missing after sign-in")
-                    return@launch
-                }
+
+                val userId = sessionManager.requireUserId()
 
                 val profile = userProfileRepository.getUserProfile(userId)
-                if (profile != null) {
-                    // already signed up -> navigate to main
-                    _uiState.value = AuthUiState.Success
-                    // post an event / callback to Activity to navigate
-                } else {
-                    // no profile -> navigate to onboarding
-                    _uiState.value = AuthUiState.Success // or a dedicated state
-                    // Activity should open OnboardingActivity
-                }
+
+                _uiState.value =
+                    if (profile != null) {
+                        AuthUiState.LoggedInExistingUser
+                    } else {
+                        AuthUiState.LoggedInNewUser
+                    }
             } catch (e: Exception) {
                 _uiState.value = AuthUiState.Error(e.message ?: "Login failed")
             }
         }
-    }
-
-    private fun onSuccess() {
-        println("Log in successfully!")
-    }
-
-    private fun onError(exception: Exception) {
-        println("Log in error: ${exception.message}")
     }
 }

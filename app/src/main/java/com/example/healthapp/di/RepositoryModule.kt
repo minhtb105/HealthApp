@@ -8,6 +8,8 @@ import com.example.healthapp.data.repository.UserProfileRepositoryImpl
 import com.example.healthapp.data.repository.WeightRepositoryImpl
 import com.example.healthapp.domain.repository.UserProfileRepository
 import com.example.healthapp.domain.repository.WeightRepository
+import com.example.healthapp.data.remote.FirebaseAuthService
+import com.example.healthapp.domain.repository.AuthRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -36,4 +38,9 @@ abstract class RepositoryModule {
     abstract fun bindUserProfileRepository(
         impl: UserProfileRepositoryImpl
     ): UserProfileRepository
+
+    @Binds
+    abstract fun bindAuthRepository(
+        impl: FirebaseAuthService
+    ): AuthRepository
 }

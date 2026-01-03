@@ -6,4 +6,14 @@
     </style>
 
     <style name="Theme.HealthApp" parent="Base.Theme.HealthApp" />
+    <style name="Theme.HealthApp.Splash" parent="Theme.SplashScreen">
+        <!-- Background -->
+        <item name="windowSplashScreenBackground">@color/splash_bg</item>
+
+        <!-- Logo -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+
+        <!-- After splash -->
+        <item name="postSplashScreenTheme">@style/Theme.HealthApp</item>
+    </style>
 </resources>
