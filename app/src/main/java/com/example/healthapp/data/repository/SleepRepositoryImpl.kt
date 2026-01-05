@@ -36,8 +36,7 @@ class SleepRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
 
     override suspend fun upsertSleepSession(session: SleepSession) {
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         dao.upsert(session.toEntity(userId = userId))
     }

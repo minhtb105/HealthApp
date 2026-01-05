@@ -58,8 +58,7 @@ class HealthRepositoryImplTest {
             sessionManager = sessionManager
         )
 
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         db.userProfileDao().upsert(
             UserProfileEntity(
