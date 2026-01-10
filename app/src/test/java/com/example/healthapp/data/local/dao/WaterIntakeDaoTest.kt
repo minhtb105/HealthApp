@@ -45,8 +45,7 @@ class WaterIntakeDaoTest {
         dao = db.waterIntakeDao()
         sessionManager = FakeSessionManager()
 
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         db.userProfileDao().upsert(
             UserProfileEntity(
@@ -69,8 +68,7 @@ class WaterIntakeDaoTest {
 
     @Test
     fun getAllWaterIntake_ordersByTimestampDesc() = runBlocking {
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         // Given
         dao.insertWaterIntake(
@@ -95,8 +93,7 @@ class WaterIntakeDaoTest {
 
     @Test
     fun getWaterIntakeForDay_returnsOnlyDataInRange_orderedDesc() = runBlocking {
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         // Given
         dao.insertWaterIntake(
@@ -126,8 +123,7 @@ class WaterIntakeDaoTest {
 
     @Test
     fun getWaterIntakeSince_returnsOnlyRecentData() = runBlocking {
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         // Given
         dao.insertWaterIntake(
@@ -153,8 +149,7 @@ class WaterIntakeDaoTest {
 
     @Test
     fun getWaterIntakeInRange_returnsCorrectData() = runBlocking {
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         // Given
         dao.insertWaterIntake(

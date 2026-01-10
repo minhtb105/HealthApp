@@ -60,8 +60,7 @@ class WaterViewModelTest {
             timeProvider = fakeTimeProvider
         )
 
-        val userId = sessionManager.currentUserId
-            ?: throw IllegalStateException("User not logged in")
+        val userId = sessionManager.requireUserId()
 
         db.userProfileDao().upsert(
             UserProfileEntity(
