@@ -19,20 +19,16 @@ class OnboardingViewModel @Inject constructor(
 
     fun saveProfile(heightCm: Int, birthDate: String, gender: Gender, onDone: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
-            val userId = sessionManager.currentUserId
-            if (userId == null) {
-                onError("User not logged in")
-                return@launch
-            }
-
-            val profile = UserProfile(
-                userId = userId,
-                gender = gender,
-                birthDate = birthDate,
-                heightCm = heightCm,
-            )
-
             try {
+                val userId = sessionManager.requireUserId()
+
+                val profile = UserProfile(
+                    userId = userId,
+                    gender = gender,
+                    birthDate = birthDate,
+                    heightCm = heightCm,
+                )
+
                 userProfileRepository.upsertUserProfile(profile)
                 onDone()
             } catch (e: Exception) {
