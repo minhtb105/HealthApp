@@ -32,7 +32,7 @@ foundation = "1.7.5"
 foundationLayout = "1.7.5"
 
 # Firebase / Google
-firebaseBom = "33.6.0"
+firebaseBom = "34.7.0"
 firebaseInappmessaging = "22.0.2"
 googleServices = "4.4.2"
 
