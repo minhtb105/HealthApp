@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -30,6 +31,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        compose = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -47,43 +53,49 @@ ksp {
 }
 
 dependencies {
-    implementation(libs.firebase.inappmessaging)
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
-
-    // Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-
+    // ===================== Core =====================
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.core.splashscreen)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+
+    // ===================== Lifecycle / Architecture =====================
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    // ===================== Dependency Injection =====================
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    // Firebase BOM
-    implementation(platform(libs.firebase.bom))
+    // ===================== Database (Room) =====================
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
-    // Firebase Auth
-    implementation(libs.firebase.auth)
-
-    // Google Sign-In
-    implementation(libs.google.play.services.auth)
-
-    // Firebase features
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.firestore)
-
-    // Navigation Component
+    // ===================== Navigation =====================
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    // ---------- Unit test (JVM, no emulator) ----------
+    // ===================== Compose =====================
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.foundation)
+
+    // ===================== Firebase / Google =====================
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.inappmessaging)
+    implementation(libs.google.play.services.auth)
+
+    // ===================== Unit Test =====================
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.room.testing)
@@ -91,8 +103,7 @@ dependencies {
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.kotlinx.coroutines.test)
 
-
-    // ---------- Instrumented test (emulator) ----------
+    // ===================== Instrumented Test =====================
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.room.testing)
