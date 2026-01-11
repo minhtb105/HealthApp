@@ -29,7 +29,7 @@ composeBom = "2024.10.01"
 activityCompose = "1.9.3"
 
 # Firebase / Google
-firebaseBom = "33.6.0"
+firebaseBom = "34.7.0"
 firebaseInappmessaging = "22.0.2"
 googleServices = "4.4.2"
 
